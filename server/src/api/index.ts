@@ -36,7 +36,8 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post(`/api/auth/get-user`, authenticateToken, getUserRouter)
 
-app.post(`/api/auth/login`, vulnerableLoginRouter)
+// app.post(`/api/auth/login`, vulnerableLoginRouter)
+app.post(`/api/auth/login`, loginRouter)
 
 app.post(`/api/auth/signup`, signupRouter)
 
