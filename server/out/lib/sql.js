@@ -1,5 +1,4 @@
 "use strict";
-// lib/db.js
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -14,6 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.query = query;
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+// lib/db.js
 const promise_1 = __importDefault(require("mysql2/promise"));
 /**
  * Executes a SQL query against the database.
@@ -24,7 +26,7 @@ const promise_1 = __importDefault(require("mysql2/promise"));
 function query(sql, params) {
     return __awaiter(this, void 0, void 0, function* () {
         // Get the connection details from your environment variables
-        if (!process.env.DB_PORT || process.env.DB_USER || process.env.DB_PASSWORD || process.env.DB_NAME)
+        if (!process.env.DB_PORT || !process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_NAME || !process.env.DB_HOST)
             throw new Error("Environment variables undefined");
         const connection = yield promise_1.default.createConnection({
             host: process.env.DB_HOST,

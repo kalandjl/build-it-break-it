@@ -1,6 +1,9 @@
+import { config } from 'dotenv';
+config()
+
 // lib/db.js
 
-import mysql from 'mysql2/promise';
+import mysql from 'mysql2/promise'
 
 /**
  * Executes a SQL query against the database.
@@ -12,7 +15,7 @@ export async function query(sql: string, params: any[]) {
 
 
   // Get the connection details from your environment variables
-  if (!process.env.DB_PORT || process.env.DB_USER || process.env.DB_PASSWORD || process.env.DB_NAME) throw new Error("Environment variables undefined")
+  if (!process.env.DB_PORT || !process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_NAME || !process.env.DB_HOST) throw new Error("Environment variables undefined")
 
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST,
@@ -24,18 +27,18 @@ export async function query(sql: string, params: any[]) {
 
   try {
     // Execute the query with parameters to prevent SQL injection
-    const [results] = await connection.execute(sql, params);
-    return results;
+    const [results] = await connection.execute(sql, params)
+    return results
   } catch (error) {
     // Log any errors
     // @ts-ignore
-    console.error(`[DB QUERY ERROR]`, error.message);
+    console.error(`[DB QUERY ERROR]`, error.message)
     // Re-throw the error to be handled by the calling function
-    throw new Error('An error occurred while querying the database.');
+    throw new Error('An error occurred while querying the database.')
   } finally {
     // ALWAYS close the connection to free up resources
     if (connection) {
-      await connection.end();
+      await connection.end()
     }
   }
 }

@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const bcryptjs_1 = __importDefault(require("bcryptjs")); // Import bcrypt
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const sql_1 = require("../../lib/sql");
 const loginRouter = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // 1. Get Credentials from Request Body
