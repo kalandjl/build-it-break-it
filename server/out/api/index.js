@@ -8,6 +8,7 @@ const login_1 = __importDefault(require("./auth/login"));
 const getAllUsers_1 = __importDefault(require("./auth/getAllUsers"));
 const me_1 = __importDefault(require("./auth/me"));
 const authenticateToken_1 = require("./middleware/authenticateToken");
+const getUser_1 = __importDefault(require("./auth/getUser"));
 const express = require('express');
 const app = express();
 const port = 4000;
@@ -24,6 +25,7 @@ app.use(cors(corsOptions));
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+app.post(`/api/auth/get-user`, authenticateToken_1.authenticateToken, getUser_1.default);
 app.post(`/api/auth/login`, login_1.default);
 app.post(`/api/auth/signup`, signup_1.default);
 app.get(`/api/auth/me`, authenticateToken_1.authenticateToken, me_1.default);

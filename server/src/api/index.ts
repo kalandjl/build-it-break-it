@@ -5,6 +5,7 @@ import { query } from "../lib/sql"
 import getAllUsersRouter from "./auth/getAllUsers"
 import meRouter from "./auth/me"
 import { authenticateToken } from "./middleware/authenticateToken"
+import getUserRouter from "./auth/getUser"
 
 const express = require('express')
 const app = express()
@@ -31,6 +32,8 @@ app.use(cors(corsOptions))
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
+
+app.post(`/api/auth/get-user`, authenticateToken, getUserRouter)
 
 app.post(`/api/auth/login`, loginRouter)
 
