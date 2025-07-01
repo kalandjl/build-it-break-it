@@ -9,10 +9,15 @@ const getAllUsers_1 = __importDefault(require("./auth/getAllUsers"));
 const express = require('express');
 const app = express();
 const port = 4000;
+const cors = require("cors");
+app.use(express.json());
+const corsOptions = {
+    origin: 'http://localhost:3000' // This is the address of your Next.js frontend
+};
+app.use(cors(corsOptions));
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-app.use(express.json());
 app.post(`/api/auth/login`, login_1.default);
 app.post(`/api/auth/signup`, signup_1.default);
 app.get(`/api/auth/get-all-users`, getAllUsers_1.default);

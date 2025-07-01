@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import signupRouter from "./auth/signup"
 import loginRouter from "./auth/login"
 import { query } from "../lib/sql"
@@ -8,11 +8,20 @@ const express = require('express')
 const app = express()
 const port = 4000
 
+const cors = require("cors")
+
+
+app.use(express.json())
+
+const corsOptions = {
+  origin: 'http://localhost:3000' // This is the address of your Next.js frontend
+}
+
+app.use(cors(corsOptions))
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
-
-app.use(express.json())
 
 app.post(`/api/auth/login`, loginRouter)
 
