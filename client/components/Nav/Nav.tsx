@@ -1,3 +1,7 @@
+"use client"
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/outline";
+import { LogOut } from "lucide";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -33,6 +37,9 @@ const Nav: FC<Props> = (props) => {
                     </div>
                 ))}
             </div>
+            <button onClick={() => {window.localStorage.removeItem("accessToken"); window.location.reload()}} className="font-sans font-bold w-7 hover:scale-105 transition ease-in-out hover:cursor-pointer">
+                <ArrowLeftOnRectangleIcon stroke="#ffffff" />
+            </button>
         </nav>
     )
 }
