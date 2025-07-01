@@ -16,7 +16,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const sql_1 = require("../../lib/sql");
 const loginRouter = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // 1. Get Credentials from Request Body
+    // Get Credentials from Request Body
     const payload = req.body.user;
     if (!payload) {
         return res.status(400).send("User payload not provided in request body.");

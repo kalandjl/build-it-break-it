@@ -7,11 +7,14 @@ import User from "../../../types/User"
 
 const loginRouter = async (req: Request, res: Response) => {
     
-    // 1. Get Credentials from Request Body
+    // Get Credentials from Request Body
+
     const payload: LoginPayload = req.body.user
+
     if (!payload) {
         return res.status(400).send("User payload not provided in request body.")
     }
+    
     const { email, password } = payload
 
     if (!email || !password) {
