@@ -1,15 +1,29 @@
+"use client"
+import { useUser } from "@/util/useUser";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-    return (
+
+   const { user, isLoading, error } = useUser()    
+
+   return (
         <>
-            <Link href="/signup">
-                Sign Up
-            </Link>
-            <Link href="/login">
-                Log In
-            </Link>
+            {
+                user ? 
+                <>
+                    {`Hello, ${user.username}`}
+                </>
+                :
+                <>
+                    <Link href="/signup">
+                        Sign Up
+                    </Link>
+                    <Link href="/login">
+                        Log In
+                    </Link>
+                </>
+            }
         </>
     )
 }

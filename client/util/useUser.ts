@@ -1,8 +1,8 @@
 // hooks/useUser.ts
 "use client"
 
+import User from '@/types/User'
 import { useState, useEffect } from 'react'
-import { User } from '../types/User' // Make sure you have a User type defined
 
 interface UseUserReturn {
     user: User | null
@@ -17,8 +17,9 @@ export const useUser = (): UseUserReturn => {
 
     useEffect(() => {
         const fetchUser = async () => {
+
             // Get the token from localStorage
-            const token = localStorage.getItem('accessToken')
+            const token = window.localStorage.getItem('accessToken')
 
             // If no token is found, the user is not logged in
             if (!token) {
@@ -27,7 +28,6 @@ export const useUser = (): UseUserReturn => {
             }
 
             try {
-                // Make a request to a new, protected API route
                 const response = await fetch('http://localhost:4000/api/auth/me', {
                     headers: {
                         // Include the token in the Authorization header
@@ -46,7 +46,8 @@ export const useUser = (): UseUserReturn => {
             } catch (err: any) {
                 setError(err.message)
                 // If there's an error (e.g., token expired), clear the token
-                localStorage.removeItem('accessToken')
+                console.error(err)
+                // localStorage.removeItem('accessToken')
             } finally {
                 setIsLoading(false)
             }

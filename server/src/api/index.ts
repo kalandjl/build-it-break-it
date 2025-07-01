@@ -3,6 +3,8 @@ import signupRouter from "./auth/signup"
 import loginRouter from "./auth/login"
 import { query } from "../lib/sql"
 import getAllUsersRouter from "./auth/getAllUsers"
+import meRouter from "./auth/me"
+import { authenticateToken } from "./middleware/authenticateToken"
 
 const express = require('express')
 const app = express()
@@ -12,6 +14,13 @@ const cors = require("cors")
 
 
 app.use(express.json())
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+
+    console.log(`${req.method} ${req.url}`)
+
+    next()
+})
 
 const corsOptions = {
   origin: 'http://localhost:3000' // This is the address of your Next.js frontend
@@ -26,6 +35,8 @@ app.get('/', (req: Request, res: Response) => {
 app.post(`/api/auth/login`, loginRouter)
 
 app.post(`/api/auth/signup`, signupRouter)
+
+app.get(`/api/auth/me`, authenticateToken, meRouter)
 
 app.get(`/api/auth/get-all-users`, getAllUsersRouter)
 
