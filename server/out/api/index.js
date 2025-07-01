@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const signup_1 = __importDefault(require("./auth/signup"));
-const login_1 = __importDefault(require("./auth/login"));
 const getAllUsers_1 = __importDefault(require("./auth/getAllUsers"));
 const me_1 = __importDefault(require("./auth/me"));
 const authenticateToken_1 = require("./middleware/authenticateToken");
 const getUser_1 = __importDefault(require("./auth/getUser"));
+const login_1 = __importDefault(require("./auth/vulnerable/login"));
 const express = require('express');
 const app = express();
 const port = 4000;

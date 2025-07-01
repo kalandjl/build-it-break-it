@@ -13,16 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const promise_1 = __importDefault(require("mysql2/promise")); // We'll import mysql directly for this test
-const dangerouslyVulnerableLoginRouter = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = req.body.user;
-    const { email, password } = payload;
-    // Remove payload and field check on purpose
-    // if (!email || !password) {
-    //     return res.status(400).json({ message: "Did not send email or password." })
-    // }
+const vulnerableLoginRouter = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
     let connection;
     try {
-        // We are connecting directly and using connection.query() instead of your safe utility
         connection = yield promise_1.default.createConnection({
             host: process.env.DB_HOST,
             port: parseInt(process.env.DB_PORT || '3306'),
@@ -33,12 +27,10 @@ const dangerouslyVulnerableLoginRouter = (req, res) => __awaiter(void 0, void 0,
         // The vulnerable concatenated string
         const sql = `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`;
         console.log(`[DANGEROUS] Executing raw query: ${sql}`);
-        // Using .query() which is more susceptible than .execute()
         const [rows] = yield connection.query(sql);
         yield connection.end();
         const users = rows;
         if (users.length > 0) {
-            // In a real attack, the attacker would now have access
             res.status(200).json({ message: 'Login successful! (VULNERABLE)' });
         }
         else {
@@ -48,8 +40,7 @@ const dangerouslyVulnerableLoginRouter = (req, res) => __awaiter(void 0, void 0,
     catch (error) {
         if (connection)
             yield connection.end();
-        // Send back the raw SQL error so sqlmap can see it
         res.status(500).json({ message: error.message });
     }
 });
-exports.default = dangerouslyVulnerableLoginRouter;
+exports.default = vulnerableLoginRouter;
